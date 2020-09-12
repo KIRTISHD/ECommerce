@@ -6,6 +6,7 @@ console.log("gopal");
 
 app.get('/getfunc', (req, res, next) => {
 	res.json({"message": "hello gopal"});
+	
 })
 
 app.listen(3000);
