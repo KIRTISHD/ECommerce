@@ -11,7 +11,7 @@ const orderSchema = new Schema({
         default: Date.now,
         required: true
     },
-    UserID:{
+    UserID: {
         type: Schema.Types.ObjectId,
         ref: 'Users'
     },
