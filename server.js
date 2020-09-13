@@ -8,12 +8,6 @@ const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const userRoutes=require('./routes/userRoutes');
 
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const cors = require('cors');
-
-const helmet = require('helmet');
-
 const app = express();
 require('dotenv').config();
 
