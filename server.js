@@ -6,7 +6,7 @@ const helmet = require('helmet');
 
 const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
-const userRoutes=require('./routes/userRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 require('dotenv').config();
@@ -25,7 +25,7 @@ app.use((error, req, res, next) => {
 
 app.use('/product', productRoutes);
 app.use('/order', orderRoutes);
-app.use('/user',userRoutes);
+app.use('/user', userRoutes);
 
 mongoose
     .connect(

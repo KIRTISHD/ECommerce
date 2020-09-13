@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Product = require('../models/product');
 
 exports.addProduct = async (req, res, next) => {
-    
+
     const ProductName = req.body.productname;
     const Description = req.body.description;
     const ImageUrl = req.body.imageurl;
@@ -18,12 +18,12 @@ exports.addProduct = async (req, res, next) => {
         Quantity: Quantity
     });
 
-    try{
+    try {
         const productObj = await product.save();
 
-        res.status(201).json({ message: "Product Created"});
+        res.status(201).json({ message: "Product Created" });
     }
-    catch(err) {
+    catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
         }
@@ -32,12 +32,12 @@ exports.addProduct = async (req, res, next) => {
 }
 
 exports.getProducts = async (req, res, next) => {
-    try{
+    try {
         const products = await Product.find({ 'isDeleted': false }).where('Quantity').gt(0).exec();
 
-        res.status(200).json({ products: products});
+        res.status(200).json({ products: products });
     }
-    catch(err) {
+    catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
         }
@@ -46,12 +46,12 @@ exports.getProducts = async (req, res, next) => {
 }
 
 exports.getAllProducts = async (req, res, next) => {
-    try{
+    try {
         const products = await Product.find({ 'isDeleted': false });
 
-        res.status(200).json({ products: products});
+        res.status(200).json({ products: products });
     }
-    catch(err) {
+    catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
         }
@@ -62,14 +62,14 @@ exports.getAllProducts = async (req, res, next) => {
 exports.updateProduct = async (req, res, next) => {
 
     const productid = req.params.productid;
-    
+
     const ProductName = req.body.productname;
     const Description = req.body.description;
     const ImageUrl = req.body.imageurl;
     const Price = req.body.price;
     const Quantity = req.body.quantity;
 
-    try{
+    try {
         // check if id from client is valid mongo id
         if (!mongoose.isValidObjectId(productid)) {
             res.status(400).json({ message: 'Invalid ObjectId' });
@@ -94,7 +94,7 @@ exports.updateProduct = async (req, res, next) => {
         res.status(200).json({ message: 'Product Updated' });
 
     }
-    catch(err) {
+    catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
         }
@@ -106,7 +106,7 @@ exports.deleteProduct = async (req, res, next) => {
 
     const productid = req.params.productid;
 
-    try{
+    try {
         // check if id from client is valid mongo id
         if (!mongoose.isValidObjectId(productid)) {
             res.status(400).json({ message: 'Invalid ObjectId' });
@@ -133,7 +133,7 @@ exports.deleteProduct = async (req, res, next) => {
         res.status(200).json({ message: 'Product Deleted' });
 
     }
-    catch(err) {
+    catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
         }
