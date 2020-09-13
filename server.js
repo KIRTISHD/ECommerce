@@ -1,4 +1,12 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const helmet = require('helmet');
+
+const productRoutes = require("./routes/productRoutes");
+const orderRoutes = require("./routes/orderRoutes");
+const userRoutes=require('./routes/userRoutes');
 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -7,28 +15,27 @@ const cors = require('cors');
 const helmet = require('helmet');
 
 const app = express();
-
-const userRoutes=require('./routes/userRoutes');
-
+require('dotenv').config();
 
 app.use(bodyParser.json());
 
 app.use(cors());
 app.use(helmet());
 
-app.use('/user',userRoutes);
-//app.use('/login',userRoutes);
-
 app.use((error, req, res, next) => {
-	const message = error.message;
-    res.status(500).json({ message: message});
+    const status = error.statusCode || 500;
+    const message = error.message;
+    const data = error.data;
+    res.status(status).json({ message: message, data: data });
 });
 
-
+app.use('/product', productRoutes);
+app.use('/order', orderRoutes);
+app.use('/user',userRoutes);
 
 mongoose
     .connect(
-       'mongodb+srv://kd:kd@123@ecommerce.n5ajl.mongodb.net/Ecommerce?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }
+        'mongodb+srv://' + process.env.MONGO_HOST + ':' + process.env.MONGO_PASSWD + '@ecommerce.n5ajl.mongodb.net/' + process.env.DB_NAME + '?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }
     )
     .then(result => {
         console.log("Backend Started");
